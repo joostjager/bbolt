@@ -512,6 +512,10 @@ func (tx *Tx) allocate(count int) (*page, error) {
 
 // write writes any dirty pages to disk.
 func (tx *Tx) write() error {
+	if len(tx.pages) == 0 {
+		return nil
+	}
+
 	// Sort pages by id.
 	pages := make(pages, 0, len(tx.pages))
 	for _, p := range tx.pages {
